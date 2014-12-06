@@ -37,6 +37,7 @@ int leftStickX = 128;
 int leftStickY = 128;
 int rightStickX = 128;
 int rightStickY = 128;
+long lastSerialTime = 0;
 
 void setup(){
 
@@ -53,6 +54,7 @@ void setup(){
   bluetooth.println("U,9600,N");  // Temporarily Change the baudrate to 9600, no parity
   // 115200 can be too fast at times for NewSoftSerial to relay the data reliably
   bluetooth.begin(9600);  // Start bluetooth serial at 9600
+  delay(1000);
 }
 
 void loop(){
@@ -60,8 +62,16 @@ void loop(){
   while(bluetooth.available()) {
 
     int numBytes = bluetooth.available();
-    bluetooth.print(numBytes);
-    if (numBytes == 4) {
+
+    if (numBytes > 0 && numBytes < 4 && (millis() - lastSerialTime)>2000) {
+      bluetooth.flush();
+      forceReset(); 
+      lastSerialTime = millis();
+      bluetooth.println("flushing bt");
+
+    }
+
+    if (numBytes >= 4) {
 
       int x = bluetooth.read(); //read first byte
       int digit0 = bluetooth.read(); //read second byte if available;
@@ -71,104 +81,101 @@ void loop(){
       theNumberString[1] = digit1;
       theNumberString[2] = digit2;
       theNumberString[3] = 0x00;
-//      int last=bluetooth.read();
-      if (1==1) {
-        //  'triangle': 'T',
-        //  'circle': 'O',
-        //  'square': 'S',
-        //  'cross': 'X',
-        //  'dpadUp': 'U',
-        //  'dpadDown': 'D',
-        //  'dpadLeft': 'F',
-        //  'dpadRight': 'G',
-        //  'l1': '[',
-        //  'l2': '{',
-        //  'l3': '<',
-        //  'r1': ']',
-        //  'r2': '}',
-        //  'r3': '>',    
-        //  'select': 'Z',
-        //  'start': 'Y',
-        //  'home': 'P',
+      lastSerialTime = millis();
 
-        if (x == '*') {
-          bluetooth.flush();
-          forceReset(); 
-        } 
-        else if (x == 'T') {
-          triangleOn = (digit2 == '1');  
-        } 
-        else if (x == 'O') {
-          circleOn = (digit2 == '1');  
-        } 
-        else if (x == 'S') {
-          squareOn = (digit2 == '1'); 
-        } 
-        else if (x == 'X') {
-          crossOn = (digit2 == '1'); 
-        } 
-        else if (x == 'U') {
-          dpadUpOn = (digit2 == '1'); 
-        } 
-        else if (x == 'D') {
-          dpadDownOn = (digit2 == '1'); 
-        } 
-        else if (x == 'F') {
-          dpadLeftOn = (digit2 == '1'); 
-        } 
-        else if (x == 'G') {
-          dpadRightOn = (digit2 == '1'); 
-        } 
-        else if (x == '[') {
-          l1On = (digit2 == '1'); 
-        } 
-        else if (x == '{') {
-          l2On = (digit2 == '1'); 
-        } 
-        else if (x == '<') {
-          l3On = (digit2 == '1'); 
-        } 
-        else if (x == ']') {
-          r1On = (digit2 == '1'); 
-        } 
-        else if (x == '}') {
-          r2On = (digit2 == '1'); 
-        } 
-        else if (x == '>') {
-          r3On = (digit2 == '1'); 
-        } 
-        else if (x == 'Z') {
-          selectOn = (digit2 == '1'); 
-        } 
-        else if (x == 'Y') {
-          startOn = (digit2 == '1'); 
-        } 
-        else if (x == 'P') {
-          homeOn = (digit2 == '1');
-        }
-        else if (x == 'L') {
-          joyVal = atoi(theNumberString);
-          leftStickX = joyVal; //left stick X
+      //  'triangle': 'T',
+      //  'circle': 'O',
+      //  'square': 'S',
+      //  'cross': 'X',
+      //  'dpadUp': 'U',
+      //  'dpadDown': 'D',
+      //  'dpadLeft': 'F',
+      //  'dpadRight': 'G',
+      //  'l1': '[',
+      //  'l2': '{',
+      //  'l3': '<',
+      //  'r1': ']',
+      //  'r2': '}',
+      //  'r3': '>',    
+      //  'select': 'Z',
+      //  'start': 'Y',
+      //  'home': 'P',
 
-        } 
-        else if (x == 'l') {
-          joyVal = atoi(theNumberString);        
-          leftStickY = joyVal; //left stick Y
-        }
-        else if (x == 'R') {
-          joyVal = atoi(theNumberString);
-          rightStickX = joyVal; //left stick X
-        } 
-        else if (x == 'r') {
-          joyVal = atoi(theNumberString);
-          rightStickY = joyVal; //left stick Y
-        }
+      if (x == '*') {
+        bluetooth.flush();
+        forceReset(); 
+      } 
+      else if (x == 'T') {
+        triangleOn = (digit2 == '1');  
+      } 
+      else if (x == 'O') {
+        circleOn = (digit2 == '1');  
+      } 
+      else if (x == 'S') {
+        squareOn = (digit2 == '1'); 
+      } 
+      else if (x == 'X') {
+        crossOn = (digit2 == '1'); 
+      } 
+      else if (x == 'U') {
+        dpadUpOn = (digit2 == '1'); 
+      } 
+      else if (x == 'D') {
+        dpadDownOn = (digit2 == '1'); 
+      } 
+      else if (x == 'F') {
+        dpadLeftOn = (digit2 == '1'); 
+      } 
+      else if (x == 'G') {
+        dpadRightOn = (digit2 == '1'); 
+      } 
+      else if (x == '[') {
+        l1On = (digit2 == '1'); 
+      } 
+      else if (x == '{') {
+        l2On = (digit2 == '1'); 
+      } 
+      else if (x == '<') {
+        l3On = (digit2 == '1'); 
+      } 
+      else if (x == ']') {
+        r1On = (digit2 == '1'); 
+      } 
+      else if (x == '}') {
+        r2On = (digit2 == '1'); 
+      } 
+      else if (x == '>') {
+        r3On = (digit2 == '1'); 
+      } 
+      else if (x == 'Z') {
+        selectOn = (digit2 == '1'); 
+      } 
+      else if (x == 'Y') {
+        startOn = (digit2 == '1'); 
+      } 
+      else if (x == 'P') {
+        homeOn = (digit2 == '1');
+      }
+      else if (x == 'L') {
+        leftStickX = atoi(theNumberString);
 
-        ledState = (digit2 == '1');
-//        bluetooth.println(digit2);
+      } 
+      else if (x == 'l') {
+        leftStickY = atoi(theNumberString);        
+      }
+      else if (x == 'R') {
+        rightStickX = atoi(theNumberString);
 
+      } 
+      else if (x == 'r') {
+        rightStickY = atoi(theNumberString);
 
       }
+
+      ledState = (digit2 == '1');
+      // bluetooth.println(digit2);
+
+
 
     }
     break;
@@ -182,7 +189,7 @@ void loop(){
   setControllerData(controllerData);
 
   digitalWrite(13, ledState);
-  delay(100);
+  delay(50);
 
 
 }
@@ -254,6 +261,8 @@ void forceReset() {
   rightStickX = 128;
   rightStickY = 128;
 }
+
+
 
 
 
