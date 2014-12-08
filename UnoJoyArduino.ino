@@ -1,3 +1,4 @@
+#include <Button.h>
 #include <UnoJoy.h>
 #include <SoftwareSerial.h>
 
@@ -39,11 +40,21 @@ int rightStickX = 128;
 int rightStickY = 128;
 long lastSerialTime = 0;
 
+
+Button B(LOW);
+
 void setup(){
 
   setupUnoJoy();
 
   pinMode(led, OUTPUT);
+  pinMode(12, OUTPUT);
+
+  pinMode(8, INPUT_PULLUP);
+  
+  // Set what the button will be when pressed (default is HIGH)
+  // and set the hold time (default is 500)
+  B.SetStateAndTime(LOW, 500);
 
   // set the data rate for the SoftwareSerial port
   bluetooth.begin(115200);
@@ -55,9 +66,31 @@ void setup(){
   // 115200 can be too fast at times for NewSoftSerial to relay the data reliably
   bluetooth.begin(9600);  // Start bluetooth serial at 9600
   delay(1000);
+  
+  
 }
 
 void loop(){
+  byte myButton = B.checkButton(8);
+
+  if (myButton) // if myButton is anything but 0, it is true
+  {
+    switch (myButton)
+    {
+    case PRESSED:
+      bluetooth.print("Button was Pressed ");
+      break;
+//    case HELD:
+//      bluetooth.print("Buttons is Held:");
+//      break;
+    case RELEASED:
+      bluetooth.print("Button was Released ");
+      break;
+    default: 
+      break;
+    }
+    Serial.println(B.GetHeldTime(SECONDS));
+  }
 
   while(bluetooth.available()) {
 
@@ -261,6 +294,7 @@ void forceReset() {
   rightStickX = 128;
   rightStickY = 128;
 }
+
 
 
 
