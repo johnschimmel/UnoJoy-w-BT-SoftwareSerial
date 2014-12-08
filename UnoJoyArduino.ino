@@ -1,7 +1,7 @@
 #include <UnoJoy.h>
 #include <SoftwareSerial.h>
 
-SoftwareSerial bluetooth(10,11); // RX, TX
+SoftwareSerial bluetooth(2,3); // RX, TX
 char incomingByte;
 char controllerInput = '0';         // throw away previous integerdigit2ue
 int controllerInputdigit2 = 0;         // throw away previous integerdigit2ue
