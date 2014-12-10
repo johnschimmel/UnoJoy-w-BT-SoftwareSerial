@@ -43,9 +43,9 @@ long lastSerialTime = 0;
 
 Button ABTN(LOW);
 Button BBTN(LOW);
-Button CBTN(LOW);
-Button DBTN(LOW);
-Button EBTN(LOW);
+//Button CBTN(LOW);
+//Button DBTN(LOW);
+//Button EBTN(LOW);
 
 void setup(){
 
@@ -54,17 +54,17 @@ void setup(){
   pinMode(led, OUTPUT);
   pinMode(12, INPUT_PULLUP);
   pinMode(11, INPUT_PULLUP);
-  pinMode(10, INPUT_PULLUP);
-  pinMode(9, INPUT_PULLUP);
-  pinMode(8, INPUT_PULLUP);
+//  pinMode(10, INPUT_PULLUP);
+//  pinMode(9, INPUT_PULLUP);
+//  pinMode(8, INPUT_PULLUP);
 
   // Set what the button will be when pressed (default is HIGH)
   // and set the hold time (default is 500)
   ABTN.SetStateAndTime(LOW, 500);
   BBTN.SetStateAndTime(LOW, 500);
-  CBTN.SetStateAndTime(LOW, 500);
-  DBTN.SetStateAndTime(LOW, 500);
-  EBTN.SetStateAndTime(LOW, 500);
+//  CBTN.SetStateAndTime(LOW, 500);
+//  DBTN.SetStateAndTime(LOW, 500);
+//  EBTN.SetStateAndTime(LOW, 500);
 
   // set the data rate for the SoftwareSerial port
   bluetooth.begin(115200);
@@ -227,10 +227,10 @@ void checkSwitches() {
     switch (A_BTN)
     {
     case PRESSED:
-      bluetooth.print("A1");
+      bluetooth.println("A1");
       break;
     case RELEASED:
-      bluetooth.print("A0");
+      bluetooth.println("A0");
       break;
     default: 
       break;
@@ -243,63 +243,63 @@ void checkSwitches() {
     switch (B_BTN)
     {
     case PRESSED:
-      bluetooth.print("B1");
+      bluetooth.println("B1");
       break;
     case RELEASED:
-      bluetooth.print("B0");
+      bluetooth.println("B0");
       break;
     default: 
       break;
     }
   }
 
-  byte C_BTN = CBTN.checkButton(10);
-  if (C_BTN)
-  {
-    switch (C_BTN)
-    {
-    case PRESSED:
-      bluetooth.print("C1");
-      break;
-    case RELEASED:
-      bluetooth.print("C0");
-      break;
-    default: 
-      break;
-    }
-  }
-
-  byte D_BTN = DBTN.checkButton(9);
-  if (D_BTN)
-  {
-    switch (D_BTN)
-    {
-    case PRESSED:
-      bluetooth.print("D1");
-      break;
-    case RELEASED:
-      bluetooth.print("D0");
-      break;
-    default: 
-      break;
-    }
-  }
-
-  byte E_BTN = EBTN.checkButton(8);
-  if (E_BTN)
-  {
-    switch (E_BTN)
-    {
-    case PRESSED:
-      bluetooth.print("E1");
-      break;
-    case RELEASED:
-      bluetooth.print("E0");
-      break;
-    default: 
-      break;
-    }
-  }
+//  byte C_BTN = CBTN.checkButton(10);
+//  if (C_BTN)
+//  {
+//    switch (C_BTN)
+//    {
+//    case PRESSED:
+//      bluetooth.println("C1");
+//      break;
+//    case RELEASED:
+//      bluetooth.println("C0");
+//      break;
+//    default: 
+//      break;
+//    }
+//  }
+//
+//  byte D_BTN = DBTN.checkButton(9);
+//  if (D_BTN)
+//  {
+//    switch (D_BTN)
+//    {
+//    case PRESSED:
+//      bluetooth.println("D1");
+//      break;
+//    case RELEASED:
+//      bluetooth.println("D0");
+//      break;
+//    default: 
+//      break;
+//    }
+//  }
+//
+//  byte E_BTN = EBTN.checkButton(8);
+//  if (E_BTN)
+//  {
+//    switch (E_BTN)
+//    {
+//    case PRESSED:
+//      bluetooth.println("E1");
+//      break;
+//    case RELEASED:
+//      bluetooth.println("E0");
+//      break;
+//    default: 
+//      break;
+//    }
+//  }
 
 }
 
