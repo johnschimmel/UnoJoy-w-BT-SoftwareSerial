@@ -41,20 +41,30 @@ int rightStickY = 128;
 long lastSerialTime = 0;
 
 
-Button B(LOW);
+Button ABTN(LOW);
+Button BBTN(LOW);
+Button CBTN(LOW);
+Button DBTN(LOW);
+Button EBTN(LOW);
 
 void setup(){
 
   setupUnoJoy();
 
   pinMode(led, OUTPUT);
-  pinMode(12, OUTPUT);
-
+  pinMode(12, INPUT_PULLUP);
+  pinMode(11, INPUT_PULLUP);
+  pinMode(10, INPUT_PULLUP);
+  pinMode(9, INPUT_PULLUP);
   pinMode(8, INPUT_PULLUP);
-  
+
   // Set what the button will be when pressed (default is HIGH)
   // and set the hold time (default is 500)
-  B.SetStateAndTime(LOW, 500);
+  ABTN.SetStateAndTime(LOW, 500);
+  BBTN.SetStateAndTime(LOW, 500);
+  CBTN.SetStateAndTime(LOW, 500);
+  DBTN.SetStateAndTime(LOW, 500);
+  EBTN.SetStateAndTime(LOW, 500);
 
   // set the data rate for the SoftwareSerial port
   bluetooth.begin(115200);
@@ -66,31 +76,12 @@ void setup(){
   // 115200 can be too fast at times for NewSoftSerial to relay the data reliably
   bluetooth.begin(9600);  // Start bluetooth serial at 9600
   delay(1000);
-  
-  
+
+
 }
 
 void loop(){
-  byte myButton = B.checkButton(8);
-
-  if (myButton) // if myButton is anything but 0, it is true
-  {
-    switch (myButton)
-    {
-    case PRESSED:
-      bluetooth.print("Button was Pressed ");
-      break;
-//    case HELD:
-//      bluetooth.print("Buttons is Held:");
-//      break;
-    case RELEASED:
-      bluetooth.print("Button was Released ");
-      break;
-    default: 
-      break;
-    }
-    Serial.println(B.GetHeldTime(SECONDS));
-  }
+  checkSwitches();
 
   while(bluetooth.available()) {
 
@@ -228,7 +219,89 @@ void loop(){
 }
 
 
+void checkSwitches() {
 
+  byte A_BTN = ABTN.checkButton(12);
+  if (A_BTN)
+  {
+    switch (A_BTN)
+    {
+    case PRESSED:
+      bluetooth.print("A1");
+      break;
+    case RELEASED:
+      bluetooth.print("A0");
+      break;
+    default: 
+      break;
+    }
+  }
+
+  byte B_BTN = BBTN.checkButton(11);
+  if (B_BTN)
+  {
+    switch (B_BTN)
+    {
+    case PRESSED:
+      bluetooth.print("B1");
+      break;
+    case RELEASED:
+      bluetooth.print("B0");
+      break;
+    default: 
+      break;
+    }
+  }
+
+  byte C_BTN = CBTN.checkButton(10);
+  if (C_BTN)
+  {
+    switch (C_BTN)
+    {
+    case PRESSED:
+      bluetooth.print("C1");
+      break;
+    case RELEASED:
+      bluetooth.print("C0");
+      break;
+    default: 
+      break;
+    }
+  }
+
+  byte D_BTN = DBTN.checkButton(9);
+  if (D_BTN)
+  {
+    switch (D_BTN)
+    {
+    case PRESSED:
+      bluetooth.print("D1");
+      break;
+    case RELEASED:
+      bluetooth.print("D0");
+      break;
+    default: 
+      break;
+    }
+  }
+
+  byte E_BTN = EBTN.checkButton(8);
+  if (E_BTN)
+  {
+    switch (E_BTN)
+    {
+    case PRESSED:
+      bluetooth.print("E1");
+      break;
+    case RELEASED:
+      bluetooth.print("E0");
+      break;
+    default: 
+      break;
+    }
+  }
+
+}
 
 
 
@@ -294,6 +367,7 @@ void forceReset() {
   rightStickX = 128;
   rightStickY = 128;
 }
+
 
 
 
