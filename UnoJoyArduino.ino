@@ -221,7 +221,7 @@ void loop(){
 
 void checkSwitches() {
 
-  byte A_BTN = ABTN.checkButton(12);
+  byte A_BTN = ABTN.checkButton(8);
   if (A_BTN)
   {
     switch (A_BTN)
@@ -237,7 +237,7 @@ void checkSwitches() {
     }
   }
 
-  byte B_BTN = BBTN.checkButton(11);
+  byte B_BTN = BBTN.checkButton(9);
   if (B_BTN)
   {
     switch (B_BTN)
@@ -269,7 +269,7 @@ void checkSwitches() {
     }
   }
 
-  byte D_BTN = DBTN.checkButton(9);
+  byte D_BTN = DBTN.checkButton(11);
   if (D_BTN)
   {
     switch (D_BTN)
@@ -285,7 +285,7 @@ void checkSwitches() {
     }
   }
 
-  byte E_BTN = EBTN.checkButton(8);
+  byte E_BTN = EBTN.checkButton(12);
   if (E_BTN)
   {
     switch (E_BTN)
