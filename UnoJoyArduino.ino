@@ -49,7 +49,7 @@ Button CBTN(LOW);
 Button DBTN(LOW);
 Button EBTN(LOW);
 
-int joyStickValMap[10] = [128,0,31,62,93,124,155,168,217,248,255]; // 0 reset to 128, 1-9 incremental to 0 -255
+int joyStickValMap[10] =[128,0,32,64,96,128,159,191,223,255]; // 0 reset to 128, 1-9 incremental to 0 -255
 void setup(){
 
   setupUnoJoy();
