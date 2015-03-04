@@ -90,7 +90,7 @@ void loop(){
 
     int numBytes = bluetooth.available();
 
-    if (numBytes > 0 && numBytes < 4 && (millis() - lastSerialTime)>2000) {
+    if (numBytes > 0 && numBytes < 2 && (millis() - lastSerialTime)>2000) {
       bluetooth.flush();
       forceReset(); 
       lastSerialTime = millis();
@@ -98,7 +98,7 @@ void loop(){
 
     }
 
-    if (numBytes >= 4) {
+    if (numBytes >= 2) {
 
       int x = bluetooth.read(); //read first byte
       int val = bluetooth.read(); //read second byte if available;
