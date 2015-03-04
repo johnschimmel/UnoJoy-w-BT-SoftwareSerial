@@ -8,6 +8,8 @@ char controllerInput = '0';         // throw away previous integerdigit2ue
 int controllerInputdigit2 = 0;         // throw away previous integerdigit2ue
 
 String combinedData = "";
+String version = "v2";
+
 int byteCount = 0;
 int led = 13;
 int ledState = 0;
@@ -47,6 +49,7 @@ Button CBTN(LOW);
 Button DBTN(LOW);
 Button EBTN(LOW);
 
+int joyStickValMap[10] = [128,0,31,62,93,124,155,168,217,248,255]; // 0 reset to 128, 1-9 incremental to 0 -255
 void setup(){
 
   setupUnoJoy();
@@ -98,13 +101,13 @@ void loop(){
     if (numBytes >= 4) {
 
       int x = bluetooth.read(); //read first byte
-      int digit0 = bluetooth.read(); //read second byte if available;
-      int digit1 = bluetooth.read(); //read second byte if available;
-      int digit2 = bluetooth.read(); //read second byte if available;
-      theNumberString[0] = digit0;
-      theNumberString[1] = digit1;
-      theNumberString[2] = digit2;
-      theNumberString[3] = 0x00;
+      int val = bluetooth.read(); //read second byte if available;
+      // int digit1 = bluetooth.read(); //read second byte if available;
+      // int digit2 = bluetooth.read(); //read second byte if available;
+      // theNumberString[0] = digit0;
+      // theNumberString[1] = digit1;
+      // theNumberString[2] = digit2;
+      // theNumberString[3] = 0x00;
       lastSerialTime = millis();
 
       //  'triangle': 'T',
@@ -127,78 +130,77 @@ void loop(){
 
       if (x == '*') {
         bluetooth.flush();
-        forceReset(); 
+        forceReset();
+        bluetooth.println(version);
       } 
       else if (x == 'T') {
-        triangleOn = (digit2 == '1');  
+        triangleOn = (val == '1');  
       } 
       else if (x == 'O') {
-        circleOn = (digit2 == '1');  
+        circleOn = (val == '1');  
       } 
       else if (x == 'S') {
-        squareOn = (digit2 == '1'); 
+        squareOn = (val == '1'); 
       } 
       else if (x == 'X') {
-        crossOn = (digit2 == '1'); 
+        crossOn = (val == '1'); 
       } 
       else if (x == 'U') {
-        dpadUpOn = (digit2 == '1'); 
+        dpadUpOn = (val == '1'); 
       } 
       else if (x == 'D') {
-        dpadDownOn = (digit2 == '1'); 
+        dpadDownOn = (val == '1'); 
       } 
       else if (x == 'F') {
-        dpadLeftOn = (digit2 == '1'); 
+        dpadLeftOn = (val == '1'); 
       } 
       else if (x == 'G') {
-        dpadRightOn = (digit2 == '1'); 
+        dpadRightOn = (val == '1'); 
       } 
       else if (x == '[') {
-        l1On = (digit2 == '1'); 
+        l1On = (val == '1'); 
       } 
       else if (x == '{') {
-        l2On = (digit2 == '1'); 
+        l2On = (val == '1'); 
       } 
       else if (x == '<') {
-        l3On = (digit2 == '1'); 
+        l3On = (val == '1'); 
       } 
       else if (x == ']') {
-        r1On = (digit2 == '1'); 
+        r1On = (val == '1'); 
       } 
       else if (x == '}') {
-        r2On = (digit2 == '1'); 
+        r2On = (val == '1'); 
       } 
       else if (x == '>') {
-        r3On = (digit2 == '1'); 
+        r3On = (val == '1'); 
       } 
       else if (x == 'Z') {
-        selectOn = (digit2 == '1'); 
+        selectOn = (val == '1'); 
       } 
       else if (x == 'Y') {
-        startOn = (digit2 == '1'); 
+        startOn = (val == '1'); 
       } 
       else if (x == 'P') {
-        homeOn = (digit2 == '1');
+        homeOn = (val == '1');
       }
       else if (x == 'L') {
-        leftStickX = atoi(theNumberString);
+        leftStickX = joyStickValMap[val-48];
 
       } 
       else if (x == 'l') {
-        leftStickY = atoi(theNumberString);        
+        leftStickY = joyStickValMap[val-48];       
       }
       else if (x == 'R') {
-        rightStickX = atoi(theNumberString);
+        rightStickX = joyStickValMap[val-48];
 
       } 
       else if (x == 'r') {
-        rightStickY = atoi(theNumberString);
+        rightStickY = joyStickValMap[val-48];
 
       }
 
-      ledState = (digit2 == '1');
-      // bluetooth.println(digit2);
-
+      ledState = (val == '1');
 
 
     }
