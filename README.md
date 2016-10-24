@@ -127,6 +127,8 @@ The Chrome app allows a user to select the serial port to connect on, once conne
 
 The web app consists of an Angular app running on Google Appengine. 
 
+Typical use case is a users 
+
 Webapp consists of several components,
 
  - Websocket manager
@@ -135,10 +137,11 @@ Webapp consists of several components,
  	 - Receive data, broadcast window level events.
  - Stage area where all buttons are dragged and configured
  - Button Library
+ 	 - Drag n drop buttons / joysticks onto stage.
  - Buttons & Joysticks
-   - that can be positioned anywhere on the page
-   - configured to trigger with keyboard key events
-   - configured to trigger with switch jack presses from Arduino
+   - can be positioned anywhere on the page
+   - configure to trigger with keyboard key events
+   - configure to trigger with switch jack presses from Arduino
 
 The buttons and joysticks have two main properties, 
 
@@ -151,9 +154,14 @@ When a button/joystick is triggered that state and type are sent over the local 
 ### Video demo of Angular webapp w/ Chrome app (Youtube)
 [![Capacita web app demo](http://img.youtube.com/vi/xqC8LIHCSGE/0.jpg)](https://www.youtube.com/watch?v=xqC8LIHCSGE)
 
-
 ### Analytics
 
 We used Google Analytics to track usage during our trial run in 2015. We put tracking events on button management (adding/removing/positioning/keyboard trigger) on the stage and we tracked button/joystick trigger events. This data allowed us to see that users could figure out new features and what features they used the most. 
 
-We watched saw one particular user who had a 
+We watched saw one particular user who had a used the webapp for several hours with button presses ~700 triggers for one 30 minute period. 
+
+## Final thoughts
+
+ - Connecting into modern video game consoles is tricky but possible thanks to USB standards and devices like Titan One. 
+ - Turning the controller into an API we can stop thinking about fingers and buttons but can think about using a computer mouse, or our feet, or our voice to control the game.  
+ - The interface becomes independent of the controller's code and instead uses a set of commands that it can pass in. 
