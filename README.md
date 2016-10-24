@@ -1,8 +1,8 @@
-#Accessible Console Controller
+# Making an Accessible Video Game Controller
 
-Video games are winning in popularity over America's stated pastime of baseball. Video game consoles are in 65% of American households, today they are relatively inexpensive and use cutting edge technology to create fully audio, video and even tactile immersive experience. 
+![Capacita video game controller circuit](./images/capacita_topdown.JPG)
 
-However, video game controllers the main input device for play, have not changed to include gamers with disabilities, the use of hands "that work" is still required. This document is an exploration into Capacita, an open source accessible video game controller API so an interface can be designed to support and input method.
+Video game consoles and games are amazing works of technology however the use of hands "that work" is still required. This document is an exploration into Capacita, an open source accessible video game controller API that makes gaming accessible with the idea of bring your own interface.
 
 This document will cover,
 
@@ -10,10 +10,14 @@ This document will cover,
  - Creating an Arduino based video game controller that can be controlled with a standard RS232 serial interface.
  - Example controller built with Angular and websockets to play video games from a computer.
 
-##So your hands don't work as expected...
+## Backstory: "So your hands don't work as expected...""
 The Sony PS3 dualshock controller has 17 buttons and 2 analog [joy]sticks. The controller is typically used where one side of the controller moves a character and the other side controls the "tools" for the character, this setup works fine for a person that has the use of both hands.  
 
 This project was started for a young man with muscular dystrophy, he had no hand control but could make his right hand's index and middle finger wiggle slightly and he could move his neck to turn his head left, right, up and down. **He used a head mouse that moved the computer's mouse cursor based on his head movement, his index and middle fingers controlled left and right click on the mouse.** With this setup he could control his laptop, his home entertainment system and several lights around his apartment. But he still wanted to play video games...
+
+## tl;dr overview
+
+
 
 ## Interfacing with a video game console
 
