@@ -73,11 +73,18 @@ Example button control statement
 
 Press down X (cross) button
 
-		X1  
+	1st character is the control button/joystick
+	|
+	|  2nd character 0 (off) or 1 (on) to toggle
+	| /
+	||
+	vv
+	
+	X1  
 
 Release X (cross) button
 
-		X0
+	X0
 
 For analog joysticks which have a value range from 0 to 1023, the input was chopped into 10 choices 0 to 10, mapping the input to the 0 - 1023 option. By making this choice the analog input would read  'R0' to move the right joystick all the way to the left. Or 'R9' to move the same joystick all the way to the bottom. 
 
@@ -113,7 +120,7 @@ The Chrome app environment is impressive *(even though it's currently being pull
 The Chrome app allows a user to select the serial port to connect on, once connected it proxies the serial data to a websocket server. A webapp, a Python script or whatever can speak websockets can connect to localhost and then read and write to the Arduino.
 
 
- - Websocket to Serial: all button, joystick controls will be received by the websocket server as JSON and translated into the two character ASCII code for the Arduino controller. 
+ - Websocket to Serial: all button, joystick controls will be received by the websocket server from the websocket clients as JSON and translated into the two character ASCII code sent over serial to the Arduino controller. 
  - Serial to Websocket: switch presses from the 3.5mm mono jacks on the Arduino will be set over the Serial port, the websocket will translate into JSON and distribute to all clients.
 
 ### Webapp
@@ -122,7 +129,11 @@ The web app consists of an Angular app running on Google Appengine.
 
 Webapp consists of several components,
 
- - Stage where all buttons are dragged and configured
+ - Websocket manager
+ 	 - connect to Chrome app.
+ 	 - Send button/joystick triggers.
+ 	 - Receive data, broadcast window level events.
+ - Stage area where all buttons are dragged and configured
  - Button Library
  - Buttons & Joysticks
    - that can be positioned anywhere on the page
@@ -134,7 +145,15 @@ The buttons and joysticks have two main properties,
  * state on / off
  * type
 
+When a button/joystick is triggered that state and type are sent over the local websocket connection to the Chrome app, where it will be translated into serial for the Arduino. 
+
+
 ### Video demo of Angular webapp w/ Chrome app (Youtube)
 [![Capacita web app demo](http://img.youtube.com/vi/xqC8LIHCSGE/0.jpg)](https://www.youtube.com/watch?v=xqC8LIHCSGE)
 
 
+### Analytics
+
+We used Google Analytics to track usage during our trial run in 2015. We put tracking events on button management (adding/removing/positioning/keyboard trigger) on the stage and we tracked button/joystick trigger events. This data allowed us to see that users could figure out new features and what features they used the most. 
+
+We watched saw one particular user who had a 
