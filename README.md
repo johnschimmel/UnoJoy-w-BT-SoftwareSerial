@@ -69,7 +69,7 @@ To build an example interface,
 
 ### Chrome app
 
-![Chrome app flow diagram. Arduino serial to chrome app to websocket server to browser](./chromeapp.jpg)
+![Chrome app flow diagram. Arduino serial to chrome app to websocket server to browser](./images/chromeapp.jpg)
 
 The Chrome app environment is impressive *(even though it's currently being restricted to just ChromeOS the next few months)*, it provides Javascript APIs for the Chrome browser to read Serial and create a websocket server. 
 
