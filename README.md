@@ -21,7 +21,7 @@ This document will cover,
  - It works out of the box with Sony PS3 and XBox 360.
  - It works with the [Titan One](https://www.amazon.com/ConsoleTuner-Titan-One-Xbox-playstation-4/dp/B00LH5XZQS) dongle to provide access to Sony PS4 and XBox 360.
  - If you use an accessibility switch there are five 3.5mm switch jacks on the circuit to provide extra input areas.
- - **You can build your own interface with physical hardware or software to make gaming accessible.**
+ - **You can build your own interface with physical hardware or software.**
 
 ## Backstory: "So your hands don't work as expected...""
 The Sony PS3 dualshock controller has 17 buttons and 2 analog [joy]sticks. The controller is typically used where one side of the controller moves a character and the other side controls the "tools" for the character, this setup works fine for a person that has the use of both hands.  
@@ -59,13 +59,27 @@ The requirements for the controller,
 ### Arduino to the console
 When this project started in 2008 the microcontroller choice for non-electrical engineers was the [Arduino](http://www.arduino.cc), this microcontroller could be wired up for digital and analog hardware projects and it also included a simple to learn programming environment that could reprogram the operations of the microcontroller. The Arduino Uno and Leonardo boards provide a reprogrammable USB chipset that allows tinkerers to control how the Arduino "describes itself" when plugged into a host's USB port. 
 
-We needed to have the Arduino say "I'm a generic gamepad device" when plugged into the Sony PS3. After a bit of research one library called UnoJoy stood out for it's simplicity and it's documentation. The UnoJoy library would allow you to program the Arduino as usual and include a library with methods to connect to a console as well as send button presses, button releases and joystick values. The library could be used with either the Arduino Uno or Leonardo. 
+We needed to have the Arduino say "I'm a generic gamepad device" when plugged into the Sony PS3. After a bit of research one library called [UnoJoy](https://github.com/AlanChatham/UnoJoy) stood out for it's simplicity and it's documentation. The UnoJoy library would allow you to program the Arduino as usual and include a library with methods to connect to a console as well as send button presses, button releases and joystick values. The library could be used with either the Arduino Uno or Leonardo. 
 
 *Sidenote: In 2008 prior to having the Arduino Uno or the UnoJoy library, we used two microcontrollers, one Arduino to talk serial to the custom software interface and a second micrcontroller a PicBitwhacker to emulate the generic gamepad to the PS3 console.*
 
 ### Arduino RS232 Serial Interface
 
 The Arduino controller was designed to have a RS232 serial interface, this interface would allow any other serial speaking device/hardware to send in a pair of ascii characters to control buttons and joysticks. The final prototype implemented a Bluetooth Serial interface so the Arduino controller could be connected wirelessly.
+
+As the Arduino's Serial port received incoming characters, the input was checked and the controller's button states were updated. Two characters were expected, once the 2nd character was received the control loop would verify the button and change the state. 
+
+Example button control statement
+
+Press down X (cross) button
+
+		X1  
+
+Release X (cross) button
+
+		X0
+
+For analog joysticks which have a value range from 0 to 1023, the input was chopped into 10 choices 0 to 10, mapping the input to the 0 - 1023 option. By making this choice the analog input would read  'R0' to move the right joystick all the way to the left. Or 'R9' to move the same joystick all the way to the bottom. 
 
 The parts for an Arduino controller
 
@@ -85,20 +99,42 @@ An added goal of creating a video game controller as an API is to encourage peop
 ## Example controller interface
 
 To build an example interface,
- - we created a Webapp using Angular
+
  - Built a Chrome app that could be a Serial <-> Websocket proxy for the Arduino to Webapp.
+ - Developed a webapp using Angular to arrange virtual buttons and joysticks.
+
 
 ### Chrome app
 
 ![Chrome app flow diagram. Arduino serial to chrome app to websocket server to browser](./images/chromeapp.jpg)
 
-The Chrome app environment is impressive *(even though it's currently being pulled out of the browser over the next few months)*, it provides Javascript APIs for the Chrome browser to read Serial and create a websocket server. 
+The Chrome app environment is impressive *(even though it's currently being pulled out of the browser over the next few months)*, it provides Javascript APIs for the Chrome browser to read Serial and create a websocket server as well as many other OS level features. 
 
-The Chrome app allow a user to select the serial port to connect on, once connected it proxies the serial data to a websocket server. A webapp, a Python script or whatever can speak websockets can connect to localhost and then read and write to the Arduino.
+The Chrome app allows a user to select the serial port to connect on, once connected it proxies the serial data to a websocket server. A webapp, a Python script or whatever can speak websockets can connect to localhost and then read and write to the Arduino.
+
+
+ - Websocket to Serial: all button, joystick controls will be received by the websocket server as JSON and translated into the two character ASCII code for the Arduino controller. 
+ - Serial to Websocket: switch presses from the 3.5mm mono jacks on the Arduino will be set over the Serial port, the websocket will translate into JSON and distribute to all clients.
 
 ### Webapp
 
-### Demo of Angular webapp w/ Chrome app (Youtube)
+The web app consists of an Angular app running on Google Appengine. 
+
+Webapp consists of several components,
+
+ - Stage where all buttons are dragged and configured
+ - Button Library
+ - Buttons & Joysticks
+   - that can be positioned anywhere on the page
+   - configured to trigger with keyboard key events
+   - configured to trigger with switch jack presses from Arduino
+
+The buttons and joysticks have two main properties, 
+
+ * state on / off
+ * type
+
+### Video demo of Angular webapp w/ Chrome app (Youtube)
 [![Capacita web app demo](http://img.youtube.com/vi/xqC8LIHCSGE/0.jpg)](https://www.youtube.com/watch?v=xqC8LIHCSGE)
 
 
