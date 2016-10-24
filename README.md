@@ -17,6 +17,7 @@ This project was started for a young man with muscular dystrophy, he had no hand
 
 ## tl;dr overview
 
+![capacita flow diagram, sony ps3 to arduino, arduino bluetooth serial connection to computer](./images/CapacitaFlowDiagram.jpg)
 
 
 ## Interfacing with a video game console
