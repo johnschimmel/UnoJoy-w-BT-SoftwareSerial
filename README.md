@@ -2,7 +2,7 @@
 
 ![Capacita video game controller circuit](./images/capacita_topdown.JPG)
 
-Video game consoles and games are amazing works of technology however the use of hands "that work" is still required. This document is an exploration into Capacita, an open source accessible video game controller API that makes gaming accessible with the idea of bring your own interface.
+Video game consoles and games are amazing works of entertainment technology however having the use of hands "that work" is still required. This document is an exploration into Capacita, an open source accessible video game controller API that makes gaming accessible with the idea of bring your own interface.
 
 This document will cover,
 
@@ -16,21 +16,24 @@ This document will cover,
 ![capacita flow diagram, sony ps3 to arduino, arduino bluetooth serial connection to computer](./images/CapacitaFlowDiagram.jpg)
 
  - Capacita is an Arduino based game controller.
- - It accepts RS232 serial ascii commands to control video game controller button states.
+ - Utilizes the [UnoJoy Arduino library](https://github.com/AlanChatham/UnoJoy).
+ - It accepts RS232 serial ASCII commands to control video game controller button states.
  - It works out of the box with Sony PS3 and XBox 360.
- - It works with the [Titan One]() dongle to provide access to Sony PS4 and XBox 360.
- - If you use a capability switch there are five 3.5mm switch jacks on the circuit as extra input areas.
+ - It works with the [Titan One](https://www.amazon.com/ConsoleTuner-Titan-One-Xbox-playstation-4/dp/B00LH5XZQS) dongle to provide access to Sony PS4 and XBox 360.
+ - If you use an accessibility switch there are five 3.5mm switch jacks on the circuit to provide extra input areas.
  - **You can build your own interface with physical hardware or software to make gaming accessible.**
 
 ## Backstory: "So your hands don't work as expected...""
 The Sony PS3 dualshock controller has 17 buttons and 2 analog [joy]sticks. The controller is typically used where one side of the controller moves a character and the other side controls the "tools" for the character, this setup works fine for a person that has the use of both hands.  
 
-This project was started for a young man with muscular dystrophy, he had no hand control but could make his right hand's index and middle finger wiggle slightly and he could move his neck to turn his head left, right, up and down. **He used a head mouse that moved the computer's mouse cursor based on his head movement, his index and middle fingers controlled left and right click on the mouse.** With this setup he could control his laptop, his home entertainment system and several lights around his apartment. But he still wanted to play video games...
+This project was started for a young man with muscular dystrophy, he has no hand control but could slightly wiggle his right hand's index and middle finger and he could move his neck to turn his head left, right, up and down. **He used a head mouse that moved the computer's mouse cursor based on his head movement, his index and middle fingers controlled left and right click on the mouse.** With this setup he could control his laptop, his home entertainment system and several lights around his apartment. But he still wanted to play video games, we were able to help and he played usually 8-10 hours a day. :)
+
+An added goal of creating a video game controller as an API is to encourage people with disabilities to see programming as a tool to empower themselves and make their world accessible. The API is simple enough to be tinkered with using minimal code.
 
 
 ## Interfacing with a video game console
 
-To play a game a user would use a controller, luckily Sony PS3 and XBox 360 used a USB standard that can be utilized. With this standard we can use the same protocol for connecting and communicating with the console. We can connect to a console in two ways,
+To play a game a user would use a controller, the Sony PS3 and XBox 360 use a USB standard that can be utilized. With this standard we can use the same protocol for connecting and communicating with the console. We can connect to a console in two ways,
 
  - **USB generic gamepad** - the controller can be plugged into the console via USB, is received as a USB generic gamepad device.
  - **Bluetooth** - some controllers can be connected via Bluetooth to the console.
@@ -40,6 +43,10 @@ The USB method was the simplest and was selected because multiple implementation
 With the USB solution, once an emulated controller is created it should be able to send all the button presses and releases including control commands, home and select to the console. The controller should be able to emulate the analog joysticks as well. 
 
 The emulated controller was never intended to emulate the "rubble" effect that the Dualshock controller provided as feedback to a user, for example driving over rocky terrain the controller in hand would vibrate. This feature was never planned to be implemented.
+
+### About PS4 and Xbox One's security
+
+The new consoles have a lot more security to prevent third-party controllers from connecting. To get around the security tokens and encryption we made use of the [Titan One](https://www.amazon.com/ConsoleTuner-Titan-One-Xbox-playstation-4/dp/B00LH5XZQS) dongle that allows a generic gamepad to be used on any console. The Titan One was plugged in between the console and the arduino with its two USB ports.
 
 ## Creating an Arduino based video game controller
 
@@ -71,7 +78,9 @@ To build an example interface,
 
 ![Chrome app flow diagram. Arduino serial to chrome app to websocket server to browser](./images/chromeapp.jpg)
 
-The Chrome app environment is impressive *(even though it's currently being restricted to just ChromeOS the next few months)*, it provides Javascript APIs for the Chrome browser to read Serial and create a websocket server. 
+The Chrome app environment is impressive *(even though it's currently being pulled out of the browser over the next few months)*, it provides Javascript APIs for the Chrome browser to read Serial and create a websocket server. 
+
+The Chrome app allow a user to select the serial port to connect on, once connected it proxies the serial data to a websocket server. A webapp, a Python script or whatever can speak websockets can connect to localhost and then read and write to the Arduino.
 
 ### Webapp
 
