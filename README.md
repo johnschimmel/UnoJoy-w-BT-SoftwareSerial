@@ -74,7 +74,7 @@ The parts for an Arduino controller
  - couple [3.5mm mono jack](http://www.allelectronics.com/item/mmj/3.5mm-mono-open-audio-phone-jack/1.html) connectors.
  - Made an [Arduino shield](https://circuits.io/circuits/687229-arduino-uno-shield-capacita-w-smirf/) for stacking all the parts on top.
 
-![Arduino Capacita Shield](./images/shield.PNG)
+![Arduino Capacita Shield](./images/shield.png)
 
 
 ### API all the things - in the name of accessibility!
