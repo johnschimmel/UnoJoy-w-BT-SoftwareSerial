@@ -51,7 +51,7 @@ The new consoles have a lot more security to prevent third-party controllers fro
 
 The requirements for the controller,
 
- - **To the console**, Connect and control console by becoming a USB generic gamepad device.
+ - **To the game console**, Connect and control console by becoming a USB generic gamepad device.
  - **Provide RS232 serial interface** that would accept two character pairs to set button and joystick states.
 
 ![Arduino Group Shot](./images/capacita_group.JPG)
