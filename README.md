@@ -16,7 +16,7 @@ This document will cover,
 ![capacita flow diagram, sony ps3 to arduino, arduino bluetooth serial connection to computer](./images/CapacitaFlowDiagram.jpg)
 
  - Capacita is an Arduino based game controller.
- - Utilizes the [UnoJoy Arduino library](https://github.com/AlanChatham/UnoJoy).
+ - Utilizes the [UnoJoy Arduino library](https://github.com/AlanChatham/UnoJoy) to control consoles.
  - It accepts RS232 serial ASCII commands to control video game controller button states.
  - It works out of the box with Sony PS3 and XBox 360.
  - It works with the [Titan One](https://www.amazon.com/ConsoleTuner-Titan-One-Xbox-playstation-4/dp/B00LH5XZQS) dongle to provide access to Sony PS4 and XBox 360.
@@ -26,9 +26,7 @@ This document will cover,
 ## Backstory: "So your hands don't work as expected...""
 The Sony PS3 dualshock controller has 17 buttons and 2 analog [joy]sticks. The controller is typically used where one side of the controller moves a character and the other side controls the "tools" for the character, this setup works fine for a person that has the use of both hands.  
 
-This project was started for a young man with muscular dystrophy, he has no hand control but could slightly wiggle his right hand's index and middle finger and he could move his neck to turn his head left, right, up and down. **He used a head mouse that moved the computer's mouse cursor based on his head movement, his index and middle fingers controlled left and right click on the mouse.** With this setup he could control his laptop, his home entertainment system and several lights around his apartment. But he still wanted to play video games, we were able to help and he played usually 8-10 hours a day. :)
-
-An added goal of creating a video game controller as an API is to encourage people with disabilities to see programming as a tool to empower themselves and make their world accessible. The API is simple enough to be tinkered with using minimal code.
+This project was started for a young man with muscular dystrophy, he has no hand control but could slightly wiggle his right hand's index and middle finger and he could move his neck to turn his head left, right, up and down. **He used a head mouse that moved the computer's mouse cursor based on his head movement, his index and middle fingers controlled left and right click on the mouse.** With this setup he could control his laptop, his home entertainment system and several lights around his apartment. But he still wanted to play video games, we were able to build on his computer access methods and he played usually 8-10 hours a day. :)
 
 
 ## Interfacing with a video game console
@@ -50,10 +48,13 @@ The new consoles have a lot more security to prevent third-party controllers fro
 
 ## Creating an Arduino based video game controller
 
+
 The requirements for the controller,
 
  - **To the console**, Connect and control console by becoming a USB generic gamepad device.
  - **Provide RS232 serial interface** that would accept two character pairs to set button and joystick states.
+
+![Arduino Group Shot](./images/capacita_group.JPG)
 
 ### Arduino to the console
 When this project started in 2008 the microcontroller choice for non-electrical engineers was the [Arduino](http://www.arduino.cc), this microcontroller could be wired up for digital and analog hardware projects and it also included a simple to learn programming environment that could reprogram the operations of the microcontroller. The Arduino Uno and Leonardo boards provide a reprogrammable USB chipset that allows tinkerers to control how the Arduino "describes itself" when plugged into a host's USB port. 
@@ -67,6 +68,19 @@ We needed to have the Arduino say "I'm a generic gamepad device" when plugged in
 The Arduino controller was designed to have a RS232 serial interface, this interface would allow any other serial speaking device/hardware to send in a pair of ascii characters to control buttons and joysticks. The final prototype implemented a Bluetooth Serial interface so the Arduino controller could be connected wirelessly.
 
 The parts for an Arduino controller
+
+ - [Arduino Uno](http://www.arduino.cc).
+ - [Sparkfun Bluesmirf](https://learn.sparkfun.com/tutorials/using-the-bluesmirf) Gold module.
+ - couple [3.5mm mono jack](http://www.allelectronics.com/item/mmj/3.5mm-mono-open-audio-phone-jack/1.html) connectors.
+ - Made an [Arduino shield](https://circuits.io/circuits/687229-arduino-uno-shield-capacita-w-smirf/) for stacking all the parts on top.
+
+![Arduino Capacita Shield](./images/shield.PNG)
+
+
+### API all the things - in the name of accessibility!
+
+An added goal of creating a video game controller as an API is to encourage people with disabilities to see programming as a tool to empower themselves and make their world accessible. The API is simple enough to be tinkered with using minimal code.
+
 
 ## Example controller interface
 
