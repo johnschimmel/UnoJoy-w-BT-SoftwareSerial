@@ -6,9 +6,9 @@ Video game consoles and games are amazing works of entertainment technology howe
 
 This document will cover,
 
- - Interfacing with existing video game consoles, Sony PS3/PS4 and XBox 360/One
- - Creating an Arduino based video game controller that can be controlled with a standard RS232 serial interface.
- - Example controller built with Angular and websockets to play video games from a computer.
+ - [Interfacing with existing video game consoles](#interfacing-with-a-video-game-console), Sony PS3/PS4 and XBox 360/One
+ - [Creating an Arduino based video game controller](#creating-an-arduino-based-video-game-controller)that can be controlled with a standard RS232 serial interface.
+ - [Example controller](#example-controller-interface) built with Angular and websockets to play video games from a computer.
 
 
 ## tl;dr overview
@@ -19,7 +19,7 @@ This document will cover,
  - Utilizes the [UnoJoy Arduino library](https://github.com/AlanChatham/UnoJoy) to control consoles.
  - It accepts RS232 serial ASCII commands to control video game controller button states.
  - It works out of the box with Sony PS3 and XBox 360.
- - It works with the [Titan One](https://www.amazon.com/ConsoleTuner-Titan-One-Xbox-playstation-4/dp/B00LH5XZQS) dongle to provide access to Sony PS4 and XBox 360.
+ - It works with the [Titan One](https://www.amazon.com/ConsoleTuner-Titan-One-Xbox-playstation-4/dp/B00LH5XZQS) dongle to provide access to Sony PS4 and XBox One.
  - If you use an accessibility switch there are five 3.5mm switch jacks on the circuit to provide extra input areas.
  - **You can build your own interface with physical hardware or software.**
 
