@@ -10,14 +10,22 @@ This document will cover,
  - Creating an Arduino based video game controller that can be controlled with a standard RS232 serial interface.
  - Example controller built with Angular and websockets to play video games from a computer.
 
-## Backstory: "So your hands don't work as expected...""
-The Sony PS3 dualshock controller has 17 buttons and 2 analog [joy]sticks. The controller is typically used where one side of the controller moves a character and the other side controls the "tools" for the character, this setup works fine for a person that has the use of both hands.  
-
-This project was started for a young man with muscular dystrophy, he had no hand control but could make his right hand's index and middle finger wiggle slightly and he could move his neck to turn his head left, right, up and down. **He used a head mouse that moved the computer's mouse cursor based on his head movement, his index and middle fingers controlled left and right click on the mouse.** With this setup he could control his laptop, his home entertainment system and several lights around his apartment. But he still wanted to play video games...
 
 ## tl;dr overview
 
 ![capacita flow diagram, sony ps3 to arduino, arduino bluetooth serial connection to computer](./images/CapacitaFlowDiagram.jpg)
+
+ - Capacita is an Arduino based game controller.
+ - It accepts RS232 serial ascii commands to control video game controller button states.
+ - It works out of the box with Sony PS3 and XBox 360.
+ - It works with the [Titan One]() dongle to provide access to Sony PS4 and XBox 360.
+ - If you use a capability switch there are five 3.5mm switch jacks on the circuit as extra input areas.
+ - **You can build your own interface with physical hardware or software to make gaming accessible.**
+
+## Backstory: "So your hands don't work as expected...""
+The Sony PS3 dualshock controller has 17 buttons and 2 analog [joy]sticks. The controller is typically used where one side of the controller moves a character and the other side controls the "tools" for the character, this setup works fine for a person that has the use of both hands.  
+
+This project was started for a young man with muscular dystrophy, he had no hand control but could make his right hand's index and middle finger wiggle slightly and he could move his neck to turn his head left, right, up and down. **He used a head mouse that moved the computer's mouse cursor based on his head movement, his index and middle fingers controlled left and right click on the mouse.** With this setup he could control his laptop, his home entertainment system and several lights around his apartment. But he still wanted to play video games...
 
 
 ## Interfacing with a video game console
@@ -47,11 +55,27 @@ We needed to have the Arduino say "I'm a generic gamepad device" when plugged in
 
 *Sidenote: In 2008 prior to having the Arduino Uno or the UnoJoy library, we used two microcontrollers, one Arduino to talk serial to the custom software interface and a second micrcontroller a PicBitwhacker to emulate the generic gamepad to the PS3 console.*
 
-###Arduino RS232 Serial Interface
+### Arduino RS232 Serial Interface
 
 The Arduino controller was designed to have a RS232 serial interface, this interface would allow any other serial speaking device/hardware to send in a pair of ascii characters to control buttons and joysticks. The final prototype implemented a Bluetooth Serial interface so the Arduino controller could be connected wirelessly.
 
 The parts for an Arduino controller
 
 ## Example controller interface
+
+To build an example interface,
+ - we created a Webapp using Angular
+ - Built a Chrome app that could be a Serial <-> Websocket proxy for the Arduino to Webapp.
+
+### Chrome app
+
+![Chrome app flow diagram. Arduino serial to chrome app to websocket server to browser](./chromeapp.jpg)
+
+The Chrome app environment is impressive *(even though it's currently being restricted to just ChromeOS the next few months)*, it provides Javascript APIs for the Chrome browser to read Serial and create a websocket server. 
+
+### Webapp
+
+### Demo of Angular webapp w/ Chrome app (Youtube)
+[![Capacita web app demo](http://img.youtube.com/vi/xqC8LIHCSGE/0.jpg)](https://www.youtube.com/watch?v=xqC8LIHCSGE)
+
 
