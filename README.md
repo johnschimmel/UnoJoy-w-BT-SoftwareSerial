@@ -127,7 +127,13 @@ The Chrome app allows a user to select the serial port to connect on, once conne
 
 The web app consists of an Angular app running on Google Appengine. 
 
-Typical use case is a users 
+Typical use case,
+
+	- A user has Capacita connected to their video game console
+	- User opens up the Capacita Chrome app, selects the serial port and connects.
+	- Upon serial connection the browser opens the Capacita interface
+	- Capacita interface connects to the Chrome app websocket server.
+	- User plays game or manages buttons through the webapp.
 
 Webapp consists of several components,
 
