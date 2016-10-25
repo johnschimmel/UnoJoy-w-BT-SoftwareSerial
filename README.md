@@ -2,7 +2,7 @@
 
 ![Capacita video game controller circuit](./images/capacita_topdown.JPG)
 
-Video game consoles and games are amazing works of entertainment technology however having the use of hands "that work" is still required. This document is an exploration into Capacita, an open source accessible video game controller API that makes gaming accessible with the idea of bring your own interface.
+Video game consoles and games are amazing works of entertainment technology however having the use of hands "that work" is still required. This document is an exploration into Capacita, an open source video game controller API that makes gaming accessible with the idea of bring your own interface.
 
 This document will cover,
 
@@ -36,11 +36,11 @@ To play a game a user would use a controller, the Sony PS3 and XBox 360 use a US
  - **USB generic gamepad** - the controller can be plugged into the console via USB, is received as a USB generic gamepad device.
  - **Bluetooth** - some controllers can be connected via Bluetooth to the console.
 
-The USB method was the simplest and was selected because multiple implementation solutions existed to create a controller. The Bluetooth protocol to connect to the console was not selected because it was difficult to set up and was not able to be tested or see it working.
+The USB method was the simplest and was selected because multiple implementation solutions existed to create a controller. The Bluetooth protocol to connect to the console was not selected because it was difficult even have it set up and testing was never fully possible.
 
-With the USB solution, once an emulated controller is created it should be able to send all the button presses and releases including control commands, home and select to the console. The controller should be able to emulate the analog joysticks as well. 
+With the USB solution, once an emulated controller is created it should be able to send all the button presses and releases including control commands, 'home' and 'select' to the console. The controller should be able to emulate the analog joysticks as well. 
 
-The emulated controller was never intended to emulate the "rubble" effect that the Dualshock controller provided as feedback to a user, for example driving over rocky terrain the controller in hand would vibrate. This feature was never planned to be implemented.
+The emulated controller does not need to emulate the "rubble" effect that the Dualshock controller provides as feedback to a user, for example driving over rocky terrain the controller in hand would vibrate. This feature was never planned to be implemented.
 
 ### About PS4 and Xbox One's security
 
@@ -51,7 +51,7 @@ The new consoles have a lot more security to prevent third-party controllers fro
 
 The requirements for the controller,
 
- - **To the game console**, Connect and control console by becoming a USB generic gamepad device.
+ - **To the game console**, connect and control console by becoming a USB generic gamepad device.
  - **Provide RS232 serial interface** that would accept two character pairs to set button and joystick states.
 
 ![Arduino Group Shot](./images/capacita_group.JPG)
@@ -78,15 +78,15 @@ Press down X (cross) button
 	|  2nd character 0 (off) or 1 (on) to toggle
 	| /
 	||
-	vv
+	VV
 	
-	X1  
+	X1
 
 Release X (cross) button
 
 	X0
 
-For analog joysticks which have a value range from 0 to 1023, the input was chopped into 10 choices 0 to 10, mapping the input to the 0 - 1023 option. By making this choice the analog input would read  'R0' to move the right joystick all the way to the left. Or 'R9' to move the same joystick all the way to the bottom. 
+For analog joysticks which have a value range from 0 to 1023, the input was chopped into 10 choices 0 to 10, mapping the input to the 0 - 1023 option. By making this choice the analog input would read  'R0' to move the right joystick all the way to the left for the X value. Or 'r9' to move the same joystick all the way to the bottom of the Y value. 
 
 The parts for an Arduino controller
 
@@ -100,14 +100,14 @@ The parts for an Arduino controller
 
 ### API all the things - in the name of accessibility!
 
-An added goal of creating a video game controller as an API is to encourage people with disabilities to see programming as a tool to empower themselves and make their world accessible. The API is simple enough to be tinkered with using minimal code.
+An added goal of creating a video game controller as an API is to encourage people with disabilities to see programming as a tool to empower themselves to make their world accessible. The API is simple enough to be tinkered with using minimal code and programming knowledge.
 
 
 ## Example controller interface
 
 To build an example interface,
 
- - Built a Chrome app that could be a Serial <-> Websocket proxy for the Arduino to Webapp.
+ - Built a Chrome app that could be a Serial <-> Websocket proxy for the Arduino to webapp.
  - Developed a webapp using Angular to arrange virtual buttons and joysticks.
 
 
@@ -117,11 +117,11 @@ To build an example interface,
 
 The Chrome app environment is impressive *(even though it's currently being pulled out of the browser over the next few months)*, it provides Javascript APIs for the Chrome browser to read Serial and create a websocket server as well as many other OS level features. 
 
-The Chrome app allows a user to select the serial port to connect on, once connected it proxies the serial data to a websocket server. A webapp, a Python script or whatever can speak websockets can connect to localhost and then read and write to the Arduino.
+The Chrome app allows a user to select the serial port to connect on, once connected it proxies the serial data to a websocket server its created. A webapp, a Python script or whatever programming environment that can speak websockets can connect to localhost and then read and write to the Arduino.
 
 
- - Websocket to Serial: all button, joystick controls will be received by the websocket server from the websocket clients as JSON and translated into the two character ASCII code sent over serial to the Arduino controller. 
- - Serial to Websocket: switch presses from the 3.5mm mono jacks on the Arduino will be set over the Serial port, the websocket will translate into JSON and distribute to all clients.
+ - Websocket to Serial: all button, joystick controls will be received by the websocket server from the websocket clients as a JSON string and translated into the two character ASCII code sent over serial to the Arduino controller. 
+ - Serial to Websocket: switch presses from the 3.5mm mono jacks on the Arduino will be set over the Serial port, translated into JSON and distribute to all clients via websockets.
 
 ### Webapp
 
@@ -129,9 +129,9 @@ The web app consists of an Angular app running on Google Appengine.
 
 Typical use case,
 
-	- A user has Capacita connected to their video game console
+	- A user has Capacita hardware connected to their video game console
 	- User opens up the Capacita Chrome app, selects the serial port and connects.
-	- Upon serial connection the browser opens the Capacita interface
+	- Upon serial connection the browser opens the Capacita webapp interface.
 	- Capacita interface connects to the Chrome app websocket server.
 	- User plays game or manages buttons through the webapp.
 
@@ -141,13 +141,13 @@ Webapp consists of several components,
  	 - connect to Chrome app.
  	 - Send button/joystick triggers.
  	 - Receive data, broadcast window level events.
- - Stage area where all buttons are dragged and configured
+ - Stage area where all buttons are dragged and configured.
  - Button Library
  	 - Drag n drop buttons / joysticks onto stage.
  - Buttons & Joysticks
-   - can be positioned anywhere on the page
-   - configure to trigger with keyboard key events
-   - configure to trigger with switch jack presses from Arduino
+   - can be positioned anywhere on the page.
+   - configure to trigger with keyboard key events.
+   - configure to trigger with switch jack presses from Arduino.
 
 The buttons and joysticks have two main properties, 
 
@@ -164,10 +164,10 @@ When a button/joystick is triggered that state and type are sent over the local 
 
 We used Google Analytics to track usage during our trial run in 2015. We put tracking events on button management (adding/removing/positioning/keyboard trigger) on the stage and we tracked button/joystick trigger events. This data allowed us to see that users could figure out new features and what features they used the most. 
 
-We watched saw one particular user who had a used the webapp for several hours with button presses ~700 triggers for one 30 minute period. 
+We watched saw one particular user who had a used the webapp for several hours with ~700 button triggers for one 30 minute period. 
 
 ## Final thoughts
 
- - Connecting into modern video game consoles is tricky but possible thanks to USB standards and devices like Titan One. 
+ - Connecting into modern video game consoles is tricky but possible thanks to USB standards, libraries like UnoJoy and devices like Titan One. 
  - Turning the controller into an API we can stop thinking about fingers and buttons but can think about using a computer mouse, or our feet, or our voice to control the game.  
- - The interface becomes independent of the controller's code and instead uses a set of commands that it can pass in. 
+ - The interface becomes independent of the controller's code and instead uses a set of commands to do control the remote system.
